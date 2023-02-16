@@ -25,7 +25,7 @@ namespace ZealogicsSocket.App
             Port = port;
         }
 
-        public void Start(Action<(string ip, string port, string fileName)> func)
+        public void StartListening(Action<(string ip, string port, string fileName)> func)
         {
             try
             {

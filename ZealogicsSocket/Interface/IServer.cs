@@ -8,6 +8,6 @@ namespace ZealogicsSocket.Interface
 {
     internal interface IServer
     {
-        void Start(Action<(string ip, string port, string fileName)> func);
+        void StartListening(Action<(string ip, string port, string fileName)> func);
     }
 }
