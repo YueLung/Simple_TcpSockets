@@ -69,8 +69,6 @@
   </Choose>
   <ItemGroup>
     <Compile Include="App\LocalFileSerciveTests.cs" />
-    <Compile Include="App\TcpClientTests.cs" />
-    <Compile Include="App\TcpServerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

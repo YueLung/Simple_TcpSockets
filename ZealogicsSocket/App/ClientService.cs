@@ -4,27 +4,38 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using ZealogicsSocket.Extensions;
 using ZealogicsSocket.Interfaces;
 using ZealogicsSocket.Utils;
 
 namespace ZealogicsSocket.App
 {
-    public class Client : IClient
+    public class ClientService
     {
-        public string DownloadFile(string ip, string port, string fileName, string savePath)
+        private ITcpClient _client;
+        private string _ip { get; }
+        private string _port { get; }
+
+        public ClientService(ITcpClient client,string ip, string port)
+        {
+            _client = client;
+            _ip = ip;
+            _port = port;
+        }
+
+        public string DownloadFile(string fileName, string savePath)
         {
             string result = string.Empty;
 
             try
             {
-                TcpClient client = new TcpClient();
-                client.Connect(ip, Convert.ToInt32(port));
+                _client.Connect(_ip, Convert.ToInt32(_port));
 
                 result += "已連線到server..." + Environment.NewLine;
 
-                byte[] fileNameBytes = Encoding.ASCII.GetBytes(fileName);
+                byte[] fileNameBytes = fileName.GetBytes();
 
-                using (NetworkStream stream = client.GetStream())
+                using (NetworkStream stream = _client.GetStream())
                 {
                     stream.Write(fileNameBytes, 0, fileNameBytes.Length);
                     result += $"要求下載檔案 { fileName }..." + Environment.NewLine;
@@ -45,7 +56,7 @@ namespace ZealogicsSocket.App
                     }
 
                 }
-                client.Close();
+                _client.Close();
             }
             catch (Exception e)
             {

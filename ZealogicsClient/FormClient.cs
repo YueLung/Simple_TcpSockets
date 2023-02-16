@@ -30,8 +30,8 @@ namespace ZealogicsClient
 
             await Task.Run(() =>
             {
-                Client client = new Client();
-                result = client.DownloadFile(IpText.Text, PortText.Text, FileNameText.Text, SavePathText.Text);
+                ClientService client = new ClientService(new TcpClientAdapter(),IpText.Text, PortText.Text);
+                result = client.DownloadFile(FileNameText.Text, SavePathText.Text);
             });
      
             ResultText.Text = result;
