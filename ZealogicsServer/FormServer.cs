@@ -12,6 +12,7 @@ namespace ZealogicsServer
     public partial class FormServer : Form
     {
         private delegate void DelSetText(Control ctrl, string text);
+
         public FormServer()
         {
             InitializeComponent();
@@ -22,7 +23,7 @@ namespace ZealogicsServer
             OpenServer(localIp, port);
         }
 
-        private void OpenServer(string localIp, string port)
+        public void OpenServer(string localIp, string port)
         {
             IFileService fileService = new LocalFileSercive();
 

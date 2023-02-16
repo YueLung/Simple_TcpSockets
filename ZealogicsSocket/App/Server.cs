@@ -81,7 +81,7 @@ namespace ZealogicsSocket.App
                     var errorMsg = ex.Message.GetBytes();
                     client.GetStream().Write(errorMsg, 0, errorMsg.Length);
 
-                    Console.WriteLine("SocketException: {0}", ex);
+                    Console.WriteLine("Exception: {0}", ex);
                 }
             }
         }
@@ -106,9 +106,8 @@ namespace ZealogicsSocket.App
             var fileNameBytes = fileExtensionName.GetBytes();
             client.GetStream().Write(fileNameBytes, 0, fileNameBytes.Length);
 
-            // 讀取檔案內容
+            // 讀取檔案內容、傳送檔案內容
             var fileBytes = File.ReadAllBytes(targetFile);
-            // 傳送檔案內容
             client.GetStream().Write(fileBytes, 0, fileBytes.Length);
         }
 
