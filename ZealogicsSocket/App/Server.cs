@@ -7,7 +7,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using ZealogicsSocket.Extensions;
-using ZealogicsSocket.Interface;
+using ZealogicsSocket.Interfaces;
 using ZealogicsSocket.Utils;
 
 namespace ZealogicsSocket.App
@@ -17,12 +17,15 @@ namespace ZealogicsSocket.App
         public string LocalIp { get; }
         public string Port { get; }
 
+        private IFileService _fileService;
+
         private TcpListener _listener;
 
-        public Server(string localIp, string port)
+        public Server(string localIp, string port, IFileService fileService)
         {
             LocalIp = localIp;
             Port = port;
+            _fileService = fileService;
         }
 
         public void StartListening(Action<(string ip, string port, string fileName)> func)
@@ -85,17 +88,12 @@ namespace ZealogicsSocket.App
 
         private void SendFile(TcpClient client, string fileName)
         {
-            string fileDir = Path.Combine(Directory.GetCurrentDirectory(), "File");
-
-            var targetFile = Directory
-                .GetFiles(fileDir)
-                .Where(f => Path.GetFileNameWithoutExtension(f).Equals(fileName))
-                .FirstOrDefault();
+            var targetFile = _fileService.GetFilePath(fileName);
 
             if (targetFile == null)
             {
-                var msg = $"Can not find file { fileName }".GetBytes();
-                client.GetStream().Write(msg, 0, (int)msg.Length);
+                var msg = $"Can not find file {fileName}".GetBytes();
+                client.GetStream().Write(msg, 0, msg.Length);
                 return;
             }
 

@@ -4,7 +4,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
-using ZealogicsSocket.Interface;
+using ZealogicsSocket.Interfaces;
 using ZealogicsSocket.Utils;
 
 namespace ZealogicsSocket.App

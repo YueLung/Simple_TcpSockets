@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Configuration;
 using System.Windows.Forms;
 using ZealogicsSocket.App;
+using ZealogicsSocket.Interfaces;
 
 namespace ZealogicsServer
 {
@@ -18,8 +19,15 @@ namespace ZealogicsServer
             var localIp = ConfigurationManager.AppSettings["LocalIp"];
             var port = ConfigurationManager.AppSettings["Port"];
 
-            Server server = new Server(localIp, port);
-            server.Start(result =>
+            OpenServer(localIp, port);
+        }
+
+        private void OpenServer(string localIp, string port)
+        {
+            IFileService fileService = new LocalFileSercive();
+
+            Server server = new Server(localIp, port, fileService);
+            server.StartListening(result =>
             {
                 SetText(IpText, result.ip);
                 SetText(PortText, result.port);
