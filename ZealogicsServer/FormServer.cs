@@ -20,7 +20,18 @@ namespace ZealogicsServer
             var localIp = ConfigurationManager.AppSettings["LocalIp"];
             var port = ConfigurationManager.AppSettings["Port"];
 
-            OpenServer(localIp, port);
+            TcpListenerAdapter tcpListenerAdapter = new TcpListenerAdapter(localIp, Convert.ToInt32(port), new LocalFileSercive());
+
+            ListenerService listener = new ListenerService(tcpListenerAdapter);
+
+            listener.Start(result =>
+            {
+                SetText(IpText, result.ip);
+                SetText(PortText, result.port);
+                SetText(FileNameText, result.msg);
+            });
+
+            //OpenServer(localIp, port);
         }
 
         public void OpenServer(string localIp, string port)

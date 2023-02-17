@@ -23,17 +23,16 @@ namespace ZealogicsClient
         {
             ResultText.Text = "";
             this.Refresh();
-
             Thread.Sleep(300);
 
             string result = string.Empty;
 
             await Task.Run(() =>
             {
-                ClientService client = new ClientService(new TcpClientAdapter(),IpText.Text, PortText.Text);
+                ClientService client = new ClientService(new TcpClientAdapter(), IpText.Text, PortText.Text);
                 result = client.DownloadFile(FileNameText.Text, SavePathText.Text);
             });
-     
+
             ResultText.Text = result;
         }
     }

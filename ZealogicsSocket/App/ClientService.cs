@@ -16,7 +16,7 @@ namespace ZealogicsSocket.App
         private string _ip { get; }
         private string _port { get; }
 
-        public ClientService(ITcpClient client,string ip, string port)
+        public ClientService(ITcpClient client, string ip, string port)
         {
             _client = client;
             _ip = ip;
@@ -30,32 +30,52 @@ namespace ZealogicsSocket.App
             try
             {
                 _client.Connect(_ip, Convert.ToInt32(_port));
-
                 result += "已連線到server..." + Environment.NewLine;
 
-                byte[] fileNameBytes = fileName.GetBytes();
+                _client.SendMsg(fileName);
+                result += $"要求下載檔案 {fileName}..." + Environment.NewLine;
 
-                using (NetworkStream stream = _client.GetStream())
+                string type = _client.ReceiveMsg();
+                result += type + Environment.NewLine;
+
+                if (type == MsgType.Success)
                 {
-                    stream.Write(fileNameBytes, 0, fileNameBytes.Length);
-                    result += $"要求下載檔案 { fileName }..." + Environment.NewLine;
-
-                    string type = receiveMsg(stream);
-                    result += type + Environment.NewLine;
-
-                    if (type == MsgType.Success)
-                    {
-                        string fileExtensionName = receiveMsg(stream);
-
-                        receiveFile(stream, savePath, fileExtensionName);
-                    }
-                    else if (type == MsgType.Fail)
-                    {
-                        string errorMsg = receiveMsg(stream);
-                        result += errorMsg;
-                    }
-
+                    string fileExtensionName = _client.ReceiveMsg();
+                    _client.ReceiveFile(savePath, fileExtensionName);
                 }
+                else if (type == MsgType.Fail)
+                {
+                    string errorMsg = _client.ReceiveMsg();
+                    result += errorMsg;
+                }
+
+
+
+
+                //using (NetworkStream stream = _client.GetStream())
+                //{
+                //    byte[] fileNameBytes = fileName.GetBytes();
+                //    stream.Write(fileNameBytes, 0, fileNameBytes.Length);
+                //    result += $"要求下載檔案 {fileName}..." + Environment.NewLine;
+
+                //    string type = receiveMsg(stream);
+                //    result += type + Environment.NewLine;
+
+                //    if (type == MsgType.Success)
+                //    {
+                //        string fileExtensionName = receiveMsg(stream);
+
+                //        receiveFile(stream, savePath, fileExtensionName);
+                //    }
+                //    else if (type == MsgType.Fail)
+                //    {
+                //        string errorMsg = receiveMsg(stream);
+                //        result += errorMsg;
+                //    }
+
+                //}
+
+
                 _client.Close();
             }
             catch (Exception e)

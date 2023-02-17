@@ -42,12 +42,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App\ClientService.cs" />
+    <Compile Include="App\ListenerService.cs" />
     <Compile Include="App\LocalFileSercive.cs" />
     <Compile Include="App\Server.cs" />
     <Compile Include="App\TcpClientAdapter.cs" />
+    <Compile Include="App\TcpListenerAdapter.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Interfaces\IFileService.cs" />
     <Compile Include="Interfaces\ITcpClient.cs" />
+    <Compile Include="Interfaces\ITcpListener.cs" />
     <Compile Include="Utils\MsgType.cs" />
     <Compile Include="Interfaces\IServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -9,8 +9,13 @@ namespace ZealogicsSocket.Interfaces
     public interface ITcpClient : IDisposable
     {
         EndPoint RemoteEndPoint { get; }
-        NetworkStream GetStream();
+
+        Stream GetStream();
         void Connect(string ip, int port);
+        string ReceiveMsg();
+        void ReceiveFile(string savePath, string fileExtensionName);
+        void SendMsg(string msg);
+        void SendFile(IFileService fileService, string fileName);
         void Close();
     }
 }
