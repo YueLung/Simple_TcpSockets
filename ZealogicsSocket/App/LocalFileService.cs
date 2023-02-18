@@ -6,7 +6,7 @@ using ZealogicsSocket.Interfaces;
 
 namespace ZealogicsSocket.App
 {
-    public class LocalFileSercive : IFileService
+    public class LocalFileService : IFileService
     {
         public IEnumerable<string> GetFiles()
         {

@@ -21,7 +21,7 @@ namespace ZealogicsServer
             var port = ConfigurationManager.AppSettings["Port"];
 
             TcpListenerAdapter tcpListenerAdapter = new TcpListenerAdapter(localIp, Convert.ToInt32(port));
-            ListenerService listener = new ListenerService(tcpListenerAdapter, new LocalFileSercive());
+            ListenerService listener = new ListenerService(tcpListenerAdapter, new LocalFileService());
 
             listener.Start(result =>
             {

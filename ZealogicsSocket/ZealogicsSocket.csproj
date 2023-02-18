@@ -43,7 +43,7 @@
   <ItemGroup>
     <Compile Include="App\ClientService.cs" />
     <Compile Include="App\ListenerService.cs" />
-    <Compile Include="App\LocalFileSercive.cs" />
+    <Compile Include="App\LocalFileService.cs" />
     <Compile Include="App\TcpClientAdapter.cs" />
     <Compile Include="App\TcpListenerAdapter.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />

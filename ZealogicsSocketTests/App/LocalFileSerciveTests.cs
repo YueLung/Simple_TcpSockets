@@ -12,7 +12,7 @@ namespace ZealogicsSocket.App.Tests
         [TestMethod()]
         public void GetFilePathTest()
         {
-            IFileService localFileSercive = new LocalFileSercive();
+            IFileService localFileSercive = new LocalFileService();
 
             string existFileName = "test01";
 

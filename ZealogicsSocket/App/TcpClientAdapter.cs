@@ -59,9 +59,10 @@ namespace ZealogicsSocket.App
                 Directory.CreateDirectory(savePath);
             }
 
+            var fileBytes = new byte[_tcpClient.ReceiveBufferSize];
+
             var stream = _tcpClient.GetStream();
 
-            var fileBytes = new byte[1024];
             int bytesRead = stream.Read(fileBytes, 0, fileBytes.Length);
 
             // 接收檔案內容
@@ -101,6 +102,7 @@ namespace ZealogicsSocket.App
 
                 if (targetFile == null)
                 {
+                    SendMsg(MsgType.Fail);
                     SendMsg($"Can not find file {fileName}");
                     return false;
                 }
