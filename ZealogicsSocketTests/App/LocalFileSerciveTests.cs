@@ -1,7 +1,8 @@
-﻿using System;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.IO;
 using ZealogicsSocket.Interfaces;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+
 
 namespace ZealogicsSocket.App.Tests
 {

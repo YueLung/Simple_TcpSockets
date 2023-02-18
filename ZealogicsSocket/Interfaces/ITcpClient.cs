@@ -1,8 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Net;
-using System.Net.Sockets;
-using System.Threading.Tasks;
 
 namespace ZealogicsSocket.Interfaces
 {
@@ -15,7 +13,7 @@ namespace ZealogicsSocket.Interfaces
         string ReceiveMsg();
         void ReceiveFile(string savePath, string fileExtensionName);
         void SendMsg(string msg);
-        void SendFile(IFileService fileService, string fileName);
+        bool SendFile(IFileService fileService, string fileName);
         void Close();
     }
 }

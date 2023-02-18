@@ -68,6 +68,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="App\ClientServiceTests.cs" />
     <Compile Include="App\LocalFileSerciveTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

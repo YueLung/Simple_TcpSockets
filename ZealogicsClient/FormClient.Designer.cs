@@ -126,7 +126,7 @@
             this.SavePathText.Name = "SavePathText";
             this.SavePathText.Size = new System.Drawing.Size(295, 40);
             this.SavePathText.TabIndex = 8;
-            this.SavePathText.Text = "C:\\";
+            this.SavePathText.Text = "D:\\";
             // 
             // ResultText
             // 

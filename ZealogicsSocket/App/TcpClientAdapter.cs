@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using System.Threading.Tasks;
 using ZealogicsSocket.Extensions;
 using ZealogicsSocket.Interfaces;
 using ZealogicsSocket.Utils;
@@ -45,7 +42,7 @@ namespace ZealogicsSocket.App
                 var stream = _tcpClient.GetStream();
 
                 int bytesRead = stream.Read(receiveBytes, 0, receiveBytes.Length);
-                string result = Encoding.ASCII.GetString(receiveBytes, 0, bytesRead);
+                receiveMsg = Encoding.ASCII.GetString(receiveBytes, 0, bytesRead);
             }
             catch (Exception ex)
             {
@@ -96,26 +93,35 @@ namespace ZealogicsSocket.App
             }
         }
 
-        public void SendFile(IFileService fileService, string fileName)
+        public bool SendFile(IFileService fileService, string fileName)
         {
-            var targetFile = fileService.GetFilePath(fileName);
-
-            if (targetFile == null)
+            try
             {
-                SendMsg($"Can not find file {fileName}");
-                return;
+                var targetFile = fileService.GetFilePath(fileName);
+
+                if (targetFile == null)
+                {
+                    SendMsg($"Can not find file {fileName}");
+                    return false;
+                }
+
+                // 傳送成功訊息
+                SendMsg(MsgType.Success);
+
+                // 傳送檔案包含附檔名
+                string fileExtensionName = Path.GetFileName(targetFile);
+                SendMsg(fileExtensionName);
+
+                // 讀取檔案內容、傳送檔案內容
+                var fileContentBytes = File.ReadAllBytes(targetFile);
+                SendMsgByBytes(fileContentBytes);
+            }
+            catch (Exception ex)
+            {
+                return false;
             }
 
-            // 傳送成功訊息
-            SendMsg(MsgType.Success);
-
-            // 傳送檔案包含附檔名
-            string fileExtensionName = Path.GetFileName(targetFile);
-            SendMsg(fileExtensionName);
-
-            // 讀取檔案內容、傳送檔案內容
-            var fileContentBytes = File.ReadAllBytes(targetFile);
-            SendMsgByBytes(fileContentBytes);
+            return true;
         }
 
         public void Close()
